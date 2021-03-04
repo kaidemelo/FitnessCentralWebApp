@@ -1,3 +1,5 @@
+//Data file for home page, holds data objects.
+
 export const errorpage404ObjOne = {
   lightBg: true,
   lightText: false,

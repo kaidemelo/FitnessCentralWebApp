@@ -1,3 +1,5 @@
+//Data file for testimonials page, holds data objects.
+
 export const testObjOne = {
   lightBg: true,
   lightText: false,

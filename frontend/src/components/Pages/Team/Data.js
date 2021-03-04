@@ -1,3 +1,5 @@
+//Data file for teams page, holds data objects.
+
 export const teamObjOne = {
   lightBg: true,
   lightText: false,
