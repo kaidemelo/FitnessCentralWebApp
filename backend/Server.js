@@ -32,34 +32,48 @@ app.post("/registered", (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
-  db.query(
+  //Hash password using bcrypt
+  bcrypt.hash(password,saltRounds,(err, hash) => {
+    if (err) {
+      console.log(err);
+    }
+  //Insert user details into db including hashed version of password
+    db.query(
     "INSERT INTO users (username, email, password) VALUES (?,?,?)",
-    [username, email, password],
+    [username, email, hash],
     (err, result) => {
     console.log(err);
     }
   );
+  })
 });
 
+//Post request for users logging in (checks credentials against mysql db)
 app.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  //Select username from mysql db that matches query sent from front end by user
   db.query(
-    "SELECT * FROM fitnesscentral.users WHERE username = ? AND password = ?",
-    [username, password],
+    "SELECT * FROM fitnesscentral.users WHERE username = ?;",
+    username,
     (err, result) => {
       if (err) {
-        //If error return error
         console.log(err);
       }
       if (result.length > 0) {
-        //If result send user
-        console.log(result);
-        res.send(result);
+      //If result exists compare password given by user to password hash stored on mysql db
+        bcrypt.compare(password, result[0].password, (error, response) => {
+          if (response) {
+      //If response is a match send result back
+            res.send(result);
+          } else {
+      //Else if username and password don't match what's on the db return this message
+            res.send({ message: "Incorrect username/password combination" });
+          }
+        })
       } else {
-        //If user credentials don't exist return this message
-        console.log({ message: "Incorrect Username/Password combination!" });
-        res.send({ message: "Incorrect username/password combination" });
+      //If user credentials don't exist return this message
+        res.send({ message: "User doesn't exist" });
       }
     }
   );
@@ -69,52 +83,3 @@ app.post("/login", (req, res) => {
 app.listen(3001, () => {
   console.log("Server running");
 });
-
-// //Post req to insert users details into db
-// app.post("/registered", (req, res) => {
-//   const username = req.body.username;
-//   const password = req.body.password;
-//   bcrypt.hash(password, saltRounds, (err, hash) => {
-//     if (err) {
-//       console.log(err);
-//     }
-//     db.query(
-//       "INSERT INTO users (username, password) VALUES (?,?)",
-//       [username, password],
-//       (err, result) => {
-//         console.log(err);
-//       }
-//     );
-//   });
-// });
-
-// //Login route to check user/pass is the same
-// app.post("/sign-up", (req, res) => {
-//   const username = req.body.username;
-//   const password = req.body.password;
-
-//   db.query(
-//     "SELECT * FROM users WHERE username = ?;",
-//     username,
-//     (err, result) => {
-//       if (err) {
-//         res.send({ err: err});
-//       }
-
-//       if (result.length > 0) {
-//         //If yes then send user to front end (logs in user)
-//         bcrypt.compare(password, result[0].password, (error, response) => {
-//           if (response) {
-//             res.send(result)
-//           } else {
-//             //If no but user exists then return this message
-//         res.send({ message: "Wrong username/password combination!" });
-//           }
-//         });
-//       } else {
-//         //If no user match then return this message
-//         res.send({ message: "User doesn't exist!" });
-//       }
-//     }
-//   )
-// });
