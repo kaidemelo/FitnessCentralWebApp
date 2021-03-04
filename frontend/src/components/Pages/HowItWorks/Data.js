@@ -1,3 +1,5 @@
+//Data file for how it works page, holds data objects.
+
 export const howitworksObjOne = {
   lightBg: true,
   lightText: false,

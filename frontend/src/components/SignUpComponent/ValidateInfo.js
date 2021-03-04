@@ -1,5 +1,6 @@
 export default function ValidateInfo(values) {
-    //Validates sign up credentials
+    //Validates sign up credentials (passes in values array list)
+    
     //Errors array to store errors.
     let errors = {};
 

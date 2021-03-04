@@ -1,9 +1,11 @@
+//Imports
 import React from 'react';
 import './HeroSection3.css';
 import { Button } from '../Button/Button';
 import { Link } from 'react-router-dom';
 
 function HeroSection3({
+  //Imported variables which will come from the coresponding data file passed into the hero section.
   lightBg,
   topLine,
   lightText,
@@ -22,18 +24,17 @@ function HeroSection3({
   imgStart
 }) {
   return (
+  //Dictates how the passed variables from the coresponding data file is arranged in the hero section
     <>
       <div
-        className={lightBg ? 'home__hero-section' : 'home__hero-section darkBg'}
-      >
+        className={lightBg ? 'home__hero-section' : 'home__hero-section darkBg'} >
         <div className='container'>
           <div
             className='row home__hero-row'
             style={{
               display: 'flex',
               flexDirection: imgStart === 'start' ? 'row-reverse' : 'row'
-            }}
-          >
+            }} >
             <div className='col'>
               <div className='home__hero-text-wrapper'>
                 <div className='top-line'>{topLine}</div>
@@ -45,8 +46,7 @@ function HeroSection3({
                     lightTextDesc
                       ? 'home__hero-subtitle'
                       : 'home__hero-subtitle dark'
-                  }
-                >
+                  } >
                   {description} <br/>
                   {description2} <br/>
                   {description3} <br/>

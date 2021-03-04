@@ -1,9 +1,11 @@
+//Imports
 import React from 'react';
 import './HeroSection2.css';
 import { Button } from '../Button/Button';
 import { Link } from 'react-router-dom';
 
 function HeroSection2({
+  //Imported variables which will come from the coresponding data file passed into the hero section.
   lightBg,
   topLine,
   lightText,
@@ -24,6 +26,7 @@ function HeroSection2({
   description2
 }) {
   return (
+  //Dictates how the passed variables from the coresponding data file is arranged in the hero section
     <>
       <div
         className={lightBg ? 'home__hero-section' : 'home__hero-section darkBg'}
