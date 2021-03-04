@@ -1,3 +1,5 @@
+//Data file for pricing page, holds data objects.
+
 export const pricingObjOne = {
   lightBg: true,
   lightText: false,

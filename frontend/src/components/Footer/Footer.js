@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+//Imports
+import React from 'react';
 import './Footer.css';
 import { Button } from '../Button/Button';
 import { Link } from 'react-router-dom';
@@ -11,10 +12,11 @@ import {
   FaUniversity
 } from 'react-icons/fa';
 
+//Footer component to display the information and links at the bottom of pages
 function Footer() {
-
   return (
     <div className='footer-container'>
+      {/* Email subscription section */}
       <section className='footer-subscription'>
         <p className='footer-subscription-heading'>
           Sign up to get special news and exclusive offers
@@ -34,17 +36,19 @@ function Footer() {
           </form>
         </div>
       </section>
+      {/* Footer useful links section */}
       <div className='footer-links'>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
             <h2>Useful Links</h2>
-            <Link to={{ pathname: "https://github.com/kaidemelo/Fitness-Central-App" }}
+            <Link to={{ pathname: "https://github.com/kaidemelo/FitnessCentralWebApp" }}
             target='_blank'
             >GitHub Repo</Link>
             <Link to='/pricing'>Pricing</Link>
             <Link to='/team'>Team</Link>
           </div>
         </div>
+        {/* Footer about us links section */}
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
             <h2>About Us</h2>
@@ -54,14 +58,17 @@ function Footer() {
           </div>
         </div>
       </div>
+      {/* Footer Icon links section */}
       <section className='social-media'>
         <div className='social-media-wrap'>
           <div className='footer-logo'>
+            {/* Footer logo */}
             <Link to='/' className='social-logo'>
               <FaHeartbeat className='navbar-icon' />
               FITNESS CENTRAL
             </Link>
           </div>
+          {/* Footer copyright info */}
           <small className='website-rights'>FITNESS CENTRAL © 2020</small>
           <div className='social-icons'>
             <Link
@@ -98,7 +105,7 @@ function Footer() {
             </Link>
             <Link
               className='social-icon-link'
-              to={{ pathname: "https://github.com/kaidemelo/Fitness-Central-App" }}
+              to={{ pathname: "https://github.com/kaidemelo/FitnessCentralWebApp" }}
               target='_blank'
               aria-label='GitHub Repo'
             >

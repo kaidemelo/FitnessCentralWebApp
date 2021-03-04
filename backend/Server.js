@@ -32,7 +32,6 @@ app.post("/registered", (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
-
   db.query(
     "INSERT INTO users (username, email, password) VALUES (?,?,?)",
     [username, email, password],
@@ -45,7 +44,6 @@ app.post("/registered", (req, res) => {
 app.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-
   db.query(
     "SELECT * FROM fitnesscentral.users WHERE username = ? AND password = ?",
     [username, password],
@@ -76,13 +74,10 @@ app.listen(3001, () => {
 // app.post("/registered", (req, res) => {
 //   const username = req.body.username;
 //   const password = req.body.password;
-
 //   bcrypt.hash(password, saltRounds, (err, hash) => {
-
 //     if (err) {
 //       console.log(err);
 //     }
-
 //     db.query(
 //       "INSERT INTO users (username, password) VALUES (?,?)",
 //       [username, password],

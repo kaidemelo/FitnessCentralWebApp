@@ -1,3 +1,5 @@
+//Data file for home page, holds data objects.
+
 export const homeObjOne = {
   lightBg: false,
   lightText: true,

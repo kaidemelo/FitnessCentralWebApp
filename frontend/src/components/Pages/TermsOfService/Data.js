@@ -1,3 +1,5 @@
+//Data file for terms of service page, holds data objects.
+
 export const tosObjOne = {
   lightBg: true,
   lightText: false,

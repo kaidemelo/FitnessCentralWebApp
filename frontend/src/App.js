@@ -1,3 +1,4 @@
+//Imports
 import React from 'react';
 import './App.css';
 import Home from './components/Pages/HomePage/Home';
@@ -21,6 +22,7 @@ function App() {
       <Navbar />
       {/* When wrapping routes in a switch component it will search through all the routes to check if the route exists. */}
       <Switch>
+
         {/* Routes */}
         <Route path='/' exact component={Home} />
         <Route path='/sign-up' component={SignUp} />
@@ -30,8 +32,9 @@ function App() {
         <Route path='/terms-of-service' component={TermsOfService} />
         <Route path='/pricing' component={Pricing} />
         <Route path='/team' component={Team} />
-        {/* If no route is foud for the requested url load the 404 error page route. */}
-        <Route component={PageNotFound} />
+        <Route component={PageNotFound} /> {/* If no route is found for the requested url load the 404 error page route. */}
+        {/* Routes */}
+
       </Switch>
       <Footer />
       </ScrollToTop>
