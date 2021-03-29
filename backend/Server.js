@@ -4,11 +4,45 @@ const mysql = require('mysql');
 const cors = require('cors');
 
 //Initilize middleware
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const app = express();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const jwt = require('jsonwebtoken');
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+  if (!token) {
+    res.send("Yo, we need a token brudda!")
+  } else {
+    jwt.verify(token, "jwtsecret", (err, decoded) => {
+      if (err) {
+        res.json({auth: false, message: "U failed to authenticate brudda" });
+      } else {
+        req.userId = decoded.id;
+        next();
+      }
+    });
+  }
+}
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  methods: ["GET", "POST"],
+  credentials: true
+}));
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+  key: "userID",
+  secret: "sessionSecret123",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    expires: 60 * 60,
+  },
+}))
 
 //Connect to mysql db
 const db = mysql.createConnection({
@@ -48,6 +82,18 @@ app.post("/registered", (req, res) => {
   })
 });
 
+app.get('/dashboard', verifyJWT , (req, res) => {
+  res.send("Yo, u are authenticated congrats!");
+});
+
+app.get("/login", (req, res) => {
+  if (req.session.user) {
+    res.send({loggedIn: true, user: req.session.user});
+  } else {
+    res.send({loggedIn: false});
+  }
+})
+
 //Post request for users logging in (checks credentials against mysql db)
 app.post("/login", (req, res) => {
   const username = req.body.username;
@@ -65,15 +111,24 @@ app.post("/login", (req, res) => {
         bcrypt.compare(password, result[0].password, (error, response) => {
           if (response) {
       //If response is a match send result back
-            res.send(result);
+            const id = result[0].id;
+            const token = jwt.sign({id}, "jwtsecret", {
+              expiresIn: 900,
+            });
+            req.session.user = result;
+
+            console.log(req.session.user);
+            res.json({auth: true, token: token, result: result});
           } else {
       //Else if username and password don't match what's on the db return this message
-            res.send({ message: "Incorrect username/password combination" });
+            //res.send({ message: "Incorrect username/password combination" });
+            res.json({auth: false, result: result, message: "Incorrect username/password combination"});
           }
         })
       } else {
       //If user credentials don't exist return this message
-        res.send({ message: "User doesn't exist" });
+        //res.send({ message: "User doesn't exist" });
+        res.json({auth: false, result: result, message: "User doesn't exist"});
       }
     }
   );
