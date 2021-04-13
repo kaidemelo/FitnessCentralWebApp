@@ -83,7 +83,7 @@ app.post("/registered", (req, res) => {
 });
 
 app.get('/dashboard', verifyJWT , (req, res) => {
-  res.send("Yo, u are authenticated congrats!");
+  
 });
 
 app.get("/login", (req, res) => {

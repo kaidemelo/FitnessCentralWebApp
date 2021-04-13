@@ -19,10 +19,12 @@ const success = () => {
             alt="Success Image"
             className="form-img-2" onLoad={userAuthenticated(), redirect()}/>
         </div>
+        // setIsAuth(true)
     )
 };
 
 const redirect = () => {
+    
     window.setTimeout( function () {
         window.location="http://localhost:3000/dashboard";
     }, 1000);

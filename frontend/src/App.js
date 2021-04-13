@@ -1,5 +1,5 @@
 //Imports
-import React from 'react';
+import {Component, React, useState} from 'react';
 import './App.css';
 import Home from './components/Pages/HomePage/Home';
 import SignUp from './components/Pages/SignUp/SignUp';
@@ -16,8 +16,11 @@ import Login from './components/Pages/Login/Login';
 import PageNotFound from './components/Pages/404ErrorPage/404ErrorPage';
 import Dashboard from './components/Pages/Dashboard/Dashboard';
 import Axios from 'axios';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 function App() {
+  const [isAuth, setIsAuth] = useState(true)
+
   //Checks for express sessions (checks if user already has a session)
   Axios.defaults.withCredentials = true;
   return (
@@ -35,7 +38,7 @@ function App() {
         <Route path='/terms-of-service' component={TermsOfService} />
         <Route path='/pricing' component={Pricing} />
         <Route path='/team' component={Team} />
-        <Route path='/dashboard' component={Dashboard} />
+        <ProtectedRoute path="/dashboard" component={Dashboard} isAuth={isAuth} />
         <Route component={PageNotFound} /> {/* If no route is found for the requested url load the 404 error page route. */}
         {/* Routes */}
 
