@@ -1,5 +1,5 @@
 //Imports
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import Axios from 'axios';
 
@@ -8,7 +8,8 @@ const FormLogin = ({submitLoginForm}) => {
     //Variable declarations
     const[username, setUsername] = useState("");
     const[password, setPassword] = useState("");
-    const[loginStatus, setLoginStatus] = useState("");
+    const[active, setActive] = useState(false);
+    const[loginStatus, setLoginStatus] = useState(false);
 
     //Login function for when form is submitted
     const login = () => {
@@ -18,18 +19,38 @@ const FormLogin = ({submitLoginForm}) => {
                 password: password
             }).then((response) => {
                 //If respone recieved then run this code
-                if (response.data.message) {
+                if (!response.data.auth) {
                 //If response data is a message then set login status variable to the message (user/pass doesnt exist)
-                    setLoginStatus(response.data.message)
+                    setLoginStatus(false);
+                    activeHandler();
                 } else {
+                    localStorage.setItem("token", response.data.token);
                 //If response isnt a message then set login status variable to the first part of array returned by db (users name)
-                    setLoginStatus(response.data[0].username)
+                    setLoginStatus(true);
+                    setActive(false);
+                    activeHandler();
                 //And then set submit login form to true
                     submitLoginForm(true);
                 }
                 console.log(response.data);
             });
     };
+
+    const activeHandler = () => {
+        if (loginStatus) {
+            setActive(false)
+        } else if (!loginStatus && !active) {
+            setActive(true);
+        }
+    }
+
+    useEffect(()=> {
+        Axios.get('http://localhost:3001/login').then((response) => {
+            if (response.data.loggedIn == true) {
+                setLoginStatus(response.data.user[0].username);
+            }
+        })
+    }, [])
 
     return (
         <div className="form-content-right" >
@@ -70,11 +91,17 @@ const FormLogin = ({submitLoginForm}) => {
                     }} >
                     </input>
                     {/*Display login status here (user/pass is incorrect) */}
-                    <p> {loginStatus} </p>
+                    <p>
+                    {active && !loginStatus ? "Invalid Username/Password" : ""}
+                    </p>
+                    
+                    {/* <p> {active && !loginStatus ? "Invalid Username/Password" : setActive(false) } </p> */}
                 </div>
 
                 {/* Submit button for log in form */}
-                <button className="form-input-btn" type="button" onClick={login} >Log In</button>
+                <button className="form-input-btn" type="button" onClick={(e) => {
+                    login();
+                }}>Log In</button>
                 <span className="form-input-login">
                     {/* Link to sign up page at bottom of form */}
                     Haven't made an account? Sign Up <a href='/sign-up'>here</a>

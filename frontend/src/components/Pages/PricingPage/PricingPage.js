@@ -1,6 +1,6 @@
 //Imports
 import React from 'react';
-import HeroSection from '../../HeroSection/HeroSection';
+import HeroSection1 from '../../HeroSection1/HeroSection1';
 import { pricingObjOne } from './Data';
 import PricingComponent from '../../PricingComponent/Pricing';
 
@@ -9,7 +9,7 @@ function PricingPage() {
   return (
     <>
     {/* Hero section component with data object from the pricing page data file passed into it */}
-      <HeroSection {...pricingObjOne} />
+      <HeroSection1 {...pricingObjOne} />
       {/* Pricing component */}
       <PricingComponent />
     </>
