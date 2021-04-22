@@ -1,15 +1,4 @@
-import Axios from 'axios';
-
-// const getUserDetails = () => {
-//   Axios.get('http://localhost:3001/dashboard').then((response) => {
-//   if (response.data.loggedIn == true) {
-//     setUsername(response.data.user[0].username);
-//   }
-//   //"SELECT * FROM fitnesscentral.users WHERE username = ?;"
-// });
-// }
-
-//Data file for how it works page, holds data objects.
+//Data file for dashbaord, holds data objects.
 
 export const dashboardObjOne = {
     lightBg: false,
@@ -18,7 +7,7 @@ export const dashboardObjOne = {
     topLine: '',
     headline: 'Welcome Back',
     description:
-      'Here is a short explanation of the technologies we used, we can group everything behind the front-end as back-end technologies.',
+      'Get back to where you left off.',
     buttonEnabled: false,
     buttonLabel: '',
     buttonLink: '',
