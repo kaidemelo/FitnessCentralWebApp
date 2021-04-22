@@ -1,10 +1,10 @@
 //Imports
 import React from 'react';
-import './HeroSection.css';
+import '../HeroSection1/HeroSection1.css';
 import { Button } from '../Button/Button';
 import { Link } from 'react-router-dom';
 
-function HeroSection({
+function HeroSection1({
   //Imported variables which will come from the coresponding data file passed into the hero section.
   lightBg,
   topLine,
@@ -66,4 +66,4 @@ function HeroSection({
   );
 }
 
-export default HeroSection;
+export default HeroSection1;
